@@ -21,9 +21,9 @@ read-access to the S3 you plan to interact with**
 * If using an IDE like GoLand you can set this variable in Run > Edit Configurations
 
 * If you plan on running the app from the command line set your variable using
-the command below.
+the command below, substituting `<example_profile>` for the profile of your choice.
 ```
-export AWS_PROFILE=dev_env1
+export AWS_PROFILE=<example_profile>
 ```
 
 ## Running the app
