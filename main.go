@@ -11,8 +11,12 @@ import (
 func main() {
 	router := gin.Default()
 	router.GET(":bucket/*key", func(context *gin.Context) {
-		context.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		url := s3.GenerateSignedURL(context.Param("bucket"), context.Param("key"))
+		context.Writer.Header().Add("Access-Control-Allow-Origin", "*")
+		url, err := s3.GenerateSignedURL(context.Param("bucket"), context.Param("key"))
+		if err != nil {
+			context.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
 		context.String(http.StatusOK, url)
 	})
 
@@ -21,6 +25,6 @@ func main() {
 	flag.Parse()
 	log.Println(port)
 
-	router.Run(":"+port)
+	router.Run(":" + port)
 
 }
